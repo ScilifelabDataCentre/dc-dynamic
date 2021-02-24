@@ -24,7 +24,7 @@ lwc.write_file(os.path.join(CODE_PATH, 'output/covid-portal/titles_kaw.png'),
 lwc.write_file(os.path.join(CODE_PATH, 'output/covid-portal/titles_h2020.png'),
                lwc.gen_wordcloud(field='title',
                                  data_folder=PATH,
-                                 json_path='https://publications-covid19.scilifelab.se/label/Funder%3A%20H2020',
+                                 json_path='https://publications-covid19.scilifelab.se/label/Funder%3A%20H2020.json',
                                  maxwords=100))
 
 # abstracts
@@ -46,5 +46,5 @@ lwc.write_file(os.path.join(CODE_PATH, 'output/covid-portal/abstracts_kaw.png'),
 lwc.write_file(os.path.join(CODE_PATH, 'output/covid-portal/abstracts_h2020.png'),
                lwc.gen_wordcloud(field='abstract',
                                  data_folder=PATH,
-                                 json_path='https://publications-covid19.scilifelab.se/label/Funder%3A%20H2020',
+                                 json_path='https://publications-covid19.scilifelab.se/label/Funder%3A%20H2020.json',
                                  maxwords=100))
