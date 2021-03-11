@@ -6,9 +6,9 @@ RUN apt-get install -y git cron python3 python3-pip python-is-python3
 
 RUN apt-get update && apt-get upgrade -y
 
-RUN git clone https://github.com/ScilifelabDataCentre/Covid_portal_vis.git
-
 WORKDIR /code
+
+RUN git clone https://github.com/ScilifelabDataCentre/Covid_portal_vis.git
 
 COPY *.sh /code/
 COPY *.py /code/
