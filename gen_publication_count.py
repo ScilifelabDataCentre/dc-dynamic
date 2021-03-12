@@ -29,7 +29,7 @@ df2 = df.groupby(["index"]).size().reset_index(name="Number Added")
 outdata = {}
 outdata["dates"] = list(str(val) for val in df1["index"])
 outdata["cumsums"] = list(df1["cumulativecount"])
-outdata["months"] = list(str(val).split()[0] for val in df2["index"])
+outdata["months"] = list(str(val).replace(" ", "T") for val in df2["index"])
 outdata["per_month"] = list(df2["Number Added"])
 
 print(json.dumps(outdata))
