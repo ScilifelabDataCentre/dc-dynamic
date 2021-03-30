@@ -12,30 +12,6 @@ df1 = pandas.DataFrame(
     data[0:], columns=["Lan", "Datum", "Uppskattning", "Low_CI", "High_CI"]
 )
 
-REQ_ORDER = [
-    "Sk\u00e5ne",
-    "G\u00e4vleborg",
-    "Gotland",
-    "V\u00e4rmland",
-    "V\u00e4sterbotten",
-    "V\u00e4stmanland",
-    "Norrbotten",
-    "S\u00f6dermanland",
-    "J\u00e4mtland",
-    "Kalmar",
-    "\u00d6sterg\u00f6tland",
-    "Dalarna",
-    "\u00d6rebro",
-    "V\u00e4stra G\u00f6taland",
-    "Blekinge",
-    "Halland",
-    "Uppsala",
-    "V\u00e4sternorrland",
-    "J\u00f6nk\u00f6ping",
-    "Stockholm",
-    "Kronoberg",
-]
-
 # format data
 df1["Datum"] = pandas.to_datetime(df1["Datum"])
 df1.sort_values(by="Datum", ascending=False, inplace=True)
