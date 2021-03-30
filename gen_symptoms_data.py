@@ -23,5 +23,6 @@ outdata = {}
 
 outdata["z"] = list(df1["Uppskattning"])
 outdata["custom"] = [[val] for val in outdata["z"]]
+outdata["Lan"] = list(df1["Lan"])
 
 print(json.dumps(outdata))
