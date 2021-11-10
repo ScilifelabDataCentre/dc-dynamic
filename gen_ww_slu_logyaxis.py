@@ -1,5 +1,3 @@
-import json
-
 import pandas as pd
 import datetime
 import plotly.graph_objects as go
@@ -143,8 +141,6 @@ fig.update_layout(
     autosize=True,
     font=dict(size=14),
     margin=dict(r=150, t=65, b=0, l=0),
-    # width=900,
-    # height=500,
     legend=dict(yanchor="top", y=0.95, xanchor="left", x=0.99, font=dict(size=16)),
     hovermode="x unified",
     hoverdistance=1,
@@ -156,13 +152,15 @@ fig.update_xaxes(
     tickangle=45,
 )
 fig.update_yaxes(
-    title="<b>Relative copy number of<br>SARS-CoV-2 to PMMoV (%)</b>",
+    title="<b>Relative copy number of<br>SARS-CoV-2 to PMMoV (%), log</b>",
     showgrid=True,
     gridcolor="lightgrey",
     linecolor="black",
     # below ensures a zeroline on Y axis. Made it black to be clear it's different from other lines
     zeroline=True,
     zerolinecolor="black",
+    type="log",
+    dtick=1,
     # Below will set the y-axis range to constant, if you wish
     # range=[0, max(wastewater_data["relative_copy_number"] * 1.15)],
 )
@@ -195,11 +193,11 @@ fig.update_layout(
 # fig.show()  # renderer="json")
 # Write as an html
 #fig.write_html(
-#    "wastewater_combined_slu_regular.html", include_plotlyjs=True, full_html=True
+#    "wastewater_combined_slu_logyaxis.html", include_plotlyjs=True, full_html=True
 #)
 # Write as a json file
-# fig.write_json("wastewater_combined_slu_regular.json")
+# fig.write_json("wastewater_combined_slu_logyaxis.json")
 # Write as a static image
-# fig.write_image("wastewater_combined_slu_regular.png")
+# fig.write_image("wastewater_combined_slu_logyaxis.png")
 
 print(fig.to_json())
