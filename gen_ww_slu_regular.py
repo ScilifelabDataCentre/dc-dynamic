@@ -1,5 +1,3 @@
-import json
-
 import pandas as pd
 import datetime
 import plotly.graph_objects as go
