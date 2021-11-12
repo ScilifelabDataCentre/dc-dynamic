@@ -154,4 +154,4 @@ fig.update_layout(
 # Write as a static image
 # fig.write_image("wastewater_combined_stockholm_regular.png")
 
-fig.to_json()
+print(fig.to_json())
