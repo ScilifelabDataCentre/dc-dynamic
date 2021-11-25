@@ -32,8 +32,8 @@ bromma_wwtp_jarva = wastewater_data[
 bromma_wwtp_riksby = wastewater_data[
     (wastewater_data["wwtp"] == "Bromma WWTP, Riksby Inlet")
 ]
-henriksdal_wwtp_hasselby = wastewater_data[
-    (wastewater_data["wwtp"] == "Henriksdal WWTP, Hässelby Inlet")
+bromma_wwtp_hasselby = wastewater_data[
+    (wastewater_data["wwtp"] == "Bromma WWTP, Hässelby Inlet")
 ]
 henriksdal_wwtp_henriksdal = wastewater_data[
     (wastewater_data["wwtp"] == "Henriksdal WWTP, Henriksdal Inlet")
@@ -62,9 +62,9 @@ fig = go.Figure(
             line=dict(color="#308ACF", width=2),
         ),
         go.Scatter(
-            name="Henriksdal, Hässelby Inlet",
-            x=henriksdal_wwtp_hasselby.date,
-            y=henriksdal_wwtp_hasselby.value,
+            name="Bromma, Hässelby Inlet",
+            x=bromma_wwtp_hasselby.date,
+            y=bromma_wwtp_hasselby.value,
             mode="lines+markers",
             # connectgaps=False,
             marker=dict(color="#9513E9"),
@@ -151,9 +151,9 @@ fig.update_layout(
 # Below can show figure locally in tests
 # fig.show()  # renderer="json")
 # Write as an html
-#fig.write_html(
-#    "wastewater_combined_stockholm_logyaxis.html", include_plotlyjs=True, full_html=True
-#)
+fig.write_html(
+    "wastewater_combined_stockholm_logyaxis.html", include_plotlyjs=True, full_html=True
+)
 # Write as a json file
 # fig.write_json("wastewater_combined_stockholm_logyaxis.json")
 # Write as a static image
