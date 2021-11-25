@@ -146,9 +146,9 @@ fig.update_layout(
 # Below can show figure locally in tests
 # fig.show()  # renderer="json")
 # Write as an html
-fig.write_html(
-    "wastewater_combined_stockholm_regular.html", include_plotlyjs=True, full_html=True
-)
+#fig.write_html(
+#    "wastewater_combined_stockholm_regular.html", include_plotlyjs=True, full_html=True
+#)
 # Write as a json file
 # fig.write_json("wastewater_combined_stockholm_regular.json")
 # Write as a static image
