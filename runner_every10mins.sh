@@ -1,9 +1,12 @@
 export CODE_PATH=/code
 
-python "$CODE_PATH"/gen_ww_slu_logyaxis.py > "$CODE_PATH"/output/wastewater_combined_slu_logyaxis.json
-python "$CODE_PATH"/gen_ww_slu_regular.py > "$CODE_PATH"/output/wastewater_combined_slu_regular.json
-python "$CODE_PATH"/gen_ww_stockholm_logyaxis.py > "$CODE_PATH"/output/wastewater_stockholm_logyaxis.json
+#python "$CODE_PATH"/gen_ww_slu_logyaxis.py > "$CODE_PATH"/output/wastewater_combined_slu_logyaxis.json
+#python "$CODE_PATH"/gen_ww_slu_regular.py > "$CODE_PATH"/output/wastewater_combined_slu_regular.json
+#python "$CODE_PATH"/gen_ww_stockholm_logyaxis.py > "$CODE_PATH"/output/wastewater_stockholm_logyaxis.json
 #python "$CODE_PATH"/gen_ww_stockholm_regular.py > "$CODE_PATH"/output/wastewater_combined_stockholm.json
+PYTHONPATH="$CODE_PATH"/Covid_portal_vis/wastewater python "$CODE_PATH"/Covid_portal_vis/wastewater/combined_slu_logyaxis.py > "$CODE_PATH"/output/wastewater_combined_slu_logyaxis.json
+PYTHONPATH="$CODE_PATH"/Covid_portal_vis/wastewater python "$CODE_PATH"/Covid_portal_vis/wastewater/combined_slu_regular.py > "$CODE_PATH"/output/wastewater_combined_slu_regular.json
+PYTHONPATH="$CODE_PATH"/Covid_portal_vis/wastewater python "$CODE_PATH"/Covid_portal_vis/wastewater/combined_stockholm_logyaxis.py > "$CODE_PATH"/output/wastewater_stockholm_logyaxis.json
 PYTHONPATH="$CODE_PATH"/Covid_portal_vis/wastewater python "$CODE_PATH"/Covid_portal_vis/wastewater/combined_stockholm_regular.py > "$CODE_PATH"/output/wastewater_combined_stockholm.json
 
 # Upload generated files
