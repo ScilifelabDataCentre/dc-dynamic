@@ -4,12 +4,12 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y git python3 pytho
 
 WORKDIR /code
 
-RUN git clone https://github.com/ScilifelabDataCentre/Covid_portal_vis.git
+RUN git clone https://github.com/ScilifelabDataCentre/covid-portal-visualisations.git
 
 COPY *.sh *.py requirements.txt /code/
 
 RUN pip3 install -r requirements.txt
-RUN pip3 install -r Covid_portal_vis/Wordcloud/requirements.txt
+RUN pip3 install -r covid-portal-visualisations/Wordcloud/requirements.txt
 
 RUN mkdir output
 
