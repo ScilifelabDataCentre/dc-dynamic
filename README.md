@@ -35,3 +35,7 @@ curl "https://blobserver.dckube.scilifelab.se/blob/$filename" -H "x-accesskey: $
 ```
 
 Feel free to set new variables, but remember to tell @talavis if you need them to be set for the cronjobs on the cluster.
+
+## Eventual aim for this repository
+
+Files for running jobs should be held here. We should link to scripts elsewhere to avoid the duplication of e.g. visualisation scripts.
