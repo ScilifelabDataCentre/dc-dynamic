@@ -13,6 +13,5 @@ python "$VACCINE_SCRIPTS_PATH"/vaccine_heatmaps.py --output-dir $CODE_PATH/outpu
 
 # Upload generated files
 for filename in $(ls $CODE_PATH/output) ; do
-    echo "Uploading to https://blobserver.dckube.scilifelab.se/blob/$filename (file $CODE_PATH/output/$filename)"
     curl "https://blobserver.dckube.scilifelab.se/blob/$filename" -H "x-accesskey: $ACCESS_KEY" --upload-file "output/$filename"
 done
