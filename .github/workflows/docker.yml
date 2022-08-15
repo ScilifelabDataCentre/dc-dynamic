@@ -9,7 +9,7 @@ on:
     types: [published]
 jobs:
   push_to_registry:
-    if: github.repository == 'ScilifelabDataCentre/dynamic-cron'
+    if: github.repository == 'ScilifelabDataCentre/dc-dynamic'
     name: Publish Docker Image
     runs-on: ubuntu-latest
     concurrency:
