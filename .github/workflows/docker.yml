@@ -1,5 +1,6 @@
 name: Publish Docker Image
 on:
+  workflow_dispatch
   push:
     branches:
       - master
@@ -11,27 +12,47 @@ jobs:
     if: github.repository == 'ScilifelabDataCentre/dynamic-cron'
     name: Publish Docker Image
     runs-on: ubuntu-latest
+    concurrency:
+      group: ${{ github.ref }}-docker-build
+      cancel-in-progress: true
+    strategy:
+      matrix:
+        include:
+          - dockerfile: Dockerfiles/Dockerfile.backend
+            images: |
+              scilifelabdatacentre/dynamic-cron
+              ghcr.io/scilifelabdatacentre/dynamic-cron
+    permissions:
+      contents: read
+      packages: write
     steps:
       - name: Check out the repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+      # only needed when publishing to Dockerhub
       - name: Log in to Docker Hub
-        uses: docker/login-action@v1
+        uses: docker/login-action@v2
         with:
+          # available in scilifelabdatacentre, ask admin for help
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+      # only needed when publishing to Github (ghcr.io)
       - name: Log in to Github Container Repository
-        uses: docker/login-action@v1
+        uses: docker/login-action@v2
         with:
           registry: ghcr.io
+          # will run as the user who triggered the action, using its token
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Docker Meta
         id: meta
-        uses: docker/metadata-action@v3
+        uses: docker/metadata-action@v4
         with:
-          images: |
-            scilifelabdatacentre/dynamic-cron
-            ghcr.io/scilifelabdatacentre/dynamic-cron
+          images: ${{ matrix.images }}
+          tags: |
+            type=ref,event=branch
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{major}}
       - name: Build and Publish
         uses: docker/build-push-action@v2
         with:
