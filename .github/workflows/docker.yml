@@ -20,8 +20,8 @@ jobs:
         include:
           - dockerfile: Dockerfiles/Dockerfile.backend
             images: |
-              scilifelabdatacentre/dynamic-cron
-              ghcr.io/scilifelabdatacentre/dynamic-cron
+              scilifelabdatacentre/dc-dynamic
+              ghcr.io/scilifelabdatacentre/dc-dynamic
     permissions:
       contents: read
       packages: write
