@@ -19,12 +19,16 @@ Runs the commands in the file `runner_weekly.sh` on `0 4 * * 5 ` (04:00 every Fr
 
 Any files put in `$CODE_PATH/output` will be uploaded to Blobserver using the dc-dynamic account.
 
+### cron-every10minutes
 
-## 
+Runs the commands in the file `runner_every10mins.sh` on `*/10 * * * * ` (Every ten minutes)
+
 
 ## Adding jobs
 
 Add new commands to the above files to have them running on schedule. If you need jobs to run on a different schedule, talk to @talavis.
+
+Make sure that the `requirements.txt` file in dc-dynamic contains all modules required for your code **and** that any changes do not break the current code.
 
 ### Uploading files
 
