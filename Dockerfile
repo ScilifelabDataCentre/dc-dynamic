@@ -1,6 +1,6 @@
-FROM ubuntu:latest
+FROM python:3.10.6
 
-RUN apt-get update && apt-get upgrade -y && apt-get install -y git python3 python3-pip python-is-python3 curl
+RUN apt-get update && apt-get upgrade -y && apt-get install -y git curl
 
 WORKDIR /code
 
@@ -8,7 +8,7 @@ RUN git clone https://github.com/ScilifelabDataCentre/covid-portal-visualisation
 
 COPY *.sh *.py requirements.txt /code/
 
-RUN pip3 install -r requirements.txt
+RUN pip install -r requirements.txt
 
 RUN mkdir output
 
