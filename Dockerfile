@@ -9,7 +9,6 @@ RUN git clone https://github.com/ScilifelabDataCentre/covid-portal-visualisation
 COPY *.sh *.py requirements.txt /code/
 
 RUN pip3 install -r requirements.txt
-RUN pip3 install -r covid-portal-visualisations/Wordcloud/requirements.txt
 
 RUN mkdir output
 
