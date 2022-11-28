@@ -10,3 +10,5 @@ PYTHONPATH="$CODE_PATH"/covid-portal-visualisations/map python "$CODE_PATH"/covi
 for filename in $(ls $CODE_PATH/output) ; do
     curl "https://blobserver.dckube.scilifelab.se/blob/$filename" -H "x-accesskey: $ACCESS_KEY" --upload-file "output/$filename"
 done
+
+python "$CODE_PATH"/slack_daily.py
