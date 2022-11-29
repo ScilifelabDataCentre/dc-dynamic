@@ -118,20 +118,17 @@ def post_from_sll_feed(feed_name, channel, path="", name=""):
             new_last_file.write(new_last.text)
 
 
-# channels:
-# G019SN15M1T = #dc-dev-experimentation
-# C01LM5A7RUN = #jobs
 if __name__ == "__main__":
     path = "".join(sys.argv[1:]) if len(sys.argv) > 1 else ""
     try:
-        post_from_sll_feed("career", "G019SN15M1T", path=path, name="job")
+        post_from_sll_feed("career", os.environ.get("CAREER_CHANNEL", ""), path=path, name="job")
     except ValueError as err:
         sys.stderr.write(f"Job task failed: {err}")
     else:
         print("Job task finished")
 
     try:
-        post_from_sll_feed("event", "G019SN15M1T", path=path)
+        post_from_sll_feed("event", os.environ.get("EVENT_CHANNEL", path=path)
     except ValueError as err:
         sys.stderr.write(f"Event task failed: {err}")
     else:
