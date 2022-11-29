@@ -5,12 +5,17 @@
 
 import datetime
 import os
+import sys
 
 import lxml
 import requests
 from bs4 import BeautifulSoup
 
 SLL_FEED = "https://www.scilifelab.se/feed/"
+EVENTS_HELPER_FILENAME="slack-helper-events.dat"
+EVENT_HELPER_URL = "https://blobserver.dckube.scilifelab.se/blob/slack-helper-events.dat"
+JOB_HELPER_URL = "https://blobserver.dckube.scilifelab.se/blob/slack-helper-jobs.dat"
+JOB_HELPER_FILENAME="slack-helper-jobs.dat"
 FEED_DATE_FORMAT = "%a, %d %b %Y %H:%M:%S %z"
 
 
@@ -66,40 +71,57 @@ def post_to_slack(payload: dict):
     res = requests.post(
         API_URL, headers={"Authorization": f"Bearer {os.environ.get('SLACK_TOKEN')}"}, json=payload
     )
+    # if res.status_code != 200 or res.json()["
+    
     print(res)
     print(res.json())
 
 
-def check_scilifelab_jobs(max_age=24):
+def check_scilifelab_jobs(prefix=""):
     """
     Check for new jobs in the SciLifeLab jobs event feed.
 
-    Args:
-        max_age (int): Maximum time since the job was posted (hours).
+     Args:
+        prefix (str): Prefix (path) for the created helper file.
     """
     feed_req = requests.get(SLL_FEED)
+    if feed_req.status_code != 200:
+        raise ValueError("Unable to retrieve feed")
+    last_req = requests.get(JOB_HELPER_URL)
+    if last_req.status_code != 200:
+        raise ValueError("Unable to retrieve helper")
+    last = last_req.text
     soup = BeautifulSoup(feed_req.text, features="xml")
-    time_limit = datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(hours=max_age)
 
+    new_last = ""
     entries = []
     for entry in soup.find_all("item"):
-        timestamp = datetime.datetime.strptime(entry.pubDate.text, FEED_DATE_FORMAT)
-        if timestamp > time_limit:
-            # the feed is a mix of everything, looking for /career/ in the link seems to work
-            if "/career/" in entry.link.text:
-                entries.append(
-                    f":scilife: *{entry.title.text}*\n <{entry.link.text}|More information>\n"
-                )
+        if entry.guid.text == last:
+            break
+        if "/career/" in entry.link.text:
+            print(entry.guid.text)
+            if not new_last:
+                new_last = entry.guid
+            entries.append(
+                f":scilife: *{entry.title.text}*\n <{entry.link.text}|More information>\n"
+            )
     if entries:
-        if len(entries) > 1:
-            start_msg = "New jobs posted on the <https://www.scilifelab.se/careers/|careers page>!"
-        else:
-            start_msg = "New job posted on the <https://www.scilifelab.se/careers/|careers page>!"
+        start_msg = f"New job{'s' if len(entries) > 1 else ''} posted on the <https://www.scilifelab.se/careers/|careers page>!"
         # G019SN15M1T = #dc-dev-experimentation
         # C01LM5A7RUN = #jobs
-        msg = gen_feed_payload(start_msg, entries, "C01LM5A7RUN")
+        msg = gen_feed_payload(start_msg, entries, "G019SN15M1T")
+        # post_to_slack(msg)
 
-        post_to_slack(msg)
+    if new_last:
+        with open(prefix + "/" + JOB_HELPER_FILENAME, "w") as new_last_file:
+            new_last_file.write(new_last.text)
 
 
-check_scilifelab_jobs(24)
+if __name__ == "__main__":
+    prefix = "".join(sys.argv[1:]) if len(sys.argv) > 1 else ""
+    try:
+        check_scilifelab_jobs(prefix)
+    except ValueError as err:
+        sys.stderr.write(f"Job task failed: {err}")
+    else:
+        print("Job task finished")
