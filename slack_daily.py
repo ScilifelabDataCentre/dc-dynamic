@@ -128,7 +128,7 @@ if __name__ == "__main__":
         print("Job task finished")
 
     try:
-        post_from_sll_feed("event", os.environ.get("EVENT_CHANNEL", path=path)
+        post_from_sll_feed("event", os.environ.get("EVENT_CHANNEL", ""), path=path)
     except ValueError as err:
         sys.stderr.write(f"Event task failed: {err}")
     else:
