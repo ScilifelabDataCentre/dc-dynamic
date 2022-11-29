@@ -1,10 +1,8 @@
 #!/usr/bin/env python3
 
-# Expects a bot token in SLACK_BOT_TOKEN
-# Expects a user token in SLACK_USER_TOKEN
-
 import datetime
 import os
+import sys
 
 import lxml
 import requests
@@ -59,6 +57,8 @@ def post_to_slack(payload: dict):
     """
     Post a message to Slack.
 
+    Requires a user/bot token in the environment variable SLACK_TOKEN.
+
     Args:
         payload (dict): Data to send.
     """
@@ -66,40 +66,73 @@ def post_to_slack(payload: dict):
     res = requests.post(
         API_URL, headers={"Authorization": f"Bearer {os.environ.get('SLACK_TOKEN')}"}, json=payload
     )
-    print(res)
-    print(res.json())
+    # if res.status_code != 200 or res.json()["
+    if not res.json()["ok"]:
+        raise ValueError("Slack post failed")
 
 
-def check_scilifelab_jobs(max_age=24):
+def post_from_sll_feed(feed_name, channel, path="", name=""):
     """
-    Check for new jobs in the SciLifeLab jobs event feed.
+    Post items from the SciLifeLab feed to a Slack channel.
 
-    Args:
-        max_age (int): Maximum time since the job was posted (hours).
+     Args:
+        feed_name (str): The item type (e.g. "career", "event").
+        name (str): The custom name to use in the start message. Defaults to feed_name.
+        channel (str): The ID of the channel to post in.
+        path (str): Base path (except filename) for the helper file that will be created.
     """
+    if not name:
+        name = feed_name
     feed_req = requests.get(SLL_FEED)
-    soup = BeautifulSoup(feed_req.text, features="xml")
-    time_limit = datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(hours=max_age)
+    if feed_req.status_code != 200:
+        raise ValueError("Unable to retrieve feed")
+    helper_url = f"https://blobserver.dckube.scilifelab.se/blob/slack-helper-{feed_name}.dat"
 
+    last_req = requests.get(helper_url)
+    if last_req.status_code != 200:
+        raise ValueError("Unable to retrieve helper")
+    last = last_req.text
+    soup = BeautifulSoup(feed_req.text, features="xml")
+
+    new_last = ""
     entries = []
     for entry in soup.find_all("item"):
-        timestamp = datetime.datetime.strptime(entry.pubDate.text, FEED_DATE_FORMAT)
-        if timestamp > time_limit:
-            # the feed is a mix of everything, looking for /career/ in the link seems to work
-            if "/career/" in entry.link.text:
-                entries.append(
-                    f":scilife: *{entry.title.text}*\n <{entry.link.text}|More information>\n"
-                )
+        if entry.guid.text == last:
+            break
+        if f"/{feed_name}/" in entry.link.text:
+            if not new_last:
+                new_last = entry.guid
+            entries.append(
+                f":scilife: *{entry.title.text}*\n <{entry.link.text}|More information>\n"
+            )
     if entries:
-        if len(entries) > 1:
-            start_msg = "New jobs posted on the <https://www.scilifelab.se/careers/|careers page>!"
-        else:
-            start_msg = "New job posted on the <https://www.scilifelab.se/careers/|careers page>!"
-        # G019SN15M1T = #dc-dev-experimentation
-        # C01LM5A7RUN = #jobs
-        msg = gen_feed_payload(start_msg, entries, "C01LM5A7RUN")
-
+        start_msg = f"New {name}{'s' if len(entries) > 1 else ''} posted on the <https://www.scilifelab.se/{feed_name}s/|{feed_name}s page>!"
+        msg = gen_feed_payload(start_msg, entries, channel)
         post_to_slack(msg)
 
+    if new_last:
+        helper_filename = f"slack-helper-{feed_name}.dat"
+        if path and not path.endswith("/"):
+            path += "/"
+        with open(path + helper_filename, "w") as new_last_file:
+            new_last_file.write(new_last.text)
 
-check_scilifelab_jobs(24)
+
+# channels:
+# G019SN15M1T = #dc-dev-experimentation
+# C01LM5A7RUN = #jobs
+if __name__ == "__main__":
+    path = "".join(sys.argv[1:]) if len(sys.argv) > 1 else ""
+    try:
+        post_from_sll_feed("career", "G019SN15M1T", path=path, name="job")
+    except ValueError as err:
+        sys.stderr.write(f"Job task failed: {err}")
+    else:
+        print("Job task finished")
+
+    try:
+        post_from_sll_feed("event", "G019SN15M1T", path=path)
+    except ValueError as err:
+        sys.stderr.write(f"Event task failed: {err}")
+    else:
+        print("Event task finished")
