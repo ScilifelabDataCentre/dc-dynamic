@@ -88,34 +88,36 @@ def post_from_sll_feed(feed_name, channel, path="", name=""):
         raise ValueError("Unable to retrieve feed")
     helper_url = f"https://blobserver.dckube.scilifelab.se/blob/slack-helper-{feed_name}.dat"
 
-    last_req = requests.get(helper_url)
-    if last_req.status_code != 200:
+    past_req = requests.get(helper_url)
+    if past_req.status_code != 200:
         raise ValueError("Unable to retrieve helper")
-    last = last_req.text
+    past = past_req.text.split("\n")
     soup = BeautifulSoup(feed_req.text, features="xml")
 
-    new_last = ""
+    new_ids = []
     entries = []
     for entry in soup.find_all("item"):
-        if entry.guid.text == last:
+        if entry.guid.text in past:
             break
         if f"/{feed_name}/" in entry.link.text:
-            if not new_last:
-                new_last = entry.guid
+            new_ids.append(entry.guid.text)
             entries.append(
                 f":scilife: *{entry.title.text}*\n <{entry.link.text}|More information>\n"
             )
     if entries:
         start_msg = f"New {name}{'s' if len(entries) > 1 else ''} posted on the <https://www.scilifelab.se/{feed_name}s/|{feed_name}s page>!"
         msg = gen_feed_payload(start_msg, entries, channel)
+        import pprint
+
+        pprint.pprint(entries)
         post_to_slack(msg)
 
-    if new_last:
+    if new_ids:
         helper_filename = f"slack-helper-{feed_name}.dat"
         if path and not path.endswith("/"):
             path += "/"
         with open(path + helper_filename, "w") as new_last_file:
-            new_last_file.write(new_last.text)
+            new_last_file.write("\n".join(new_ids + past))
 
 
 if __name__ == "__main__":
