@@ -41,7 +41,7 @@ def gen_feed_payload(start_msg: str, entries: list, channel: str, day: str) -> d
                 "type": "section",
                 "text": {
                     "type": "mrkdwn",
-                    "text": f":figshare: *{len(entries)} new items in Figshare from {day}* :figshare:",
+                    "text": f":figshare: *{len(entries)} new item{'s' if len(entries) > 1 else ''} in Figshare from {day}* :figshare:",
                 },
             }
         ],
