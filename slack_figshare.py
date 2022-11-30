@@ -6,6 +6,7 @@ import sys
 
 import requests
 
+
 def get_new_figshare_items(day: str) -> list:
     """
     Obtain new items from the SciLifeLab Figshare instance.
@@ -55,7 +56,8 @@ def gen_feed_payload(start_msg: str, entries: list, channel: str, day: str) -> d
                     "type": "mrkdwn",
                     "text": start_msg,
                 },
-            })
+            }
+        )
         payload["blocks"].append(
             {
                 "type": "section",
@@ -105,14 +107,18 @@ def post_from_figshare(channel):
         channel (str): The ID of the channel to post in.
         path (str): Base path (except filename) for the helper file that will be created.
     """
-    day: str = (datetime.date.today() - datetime.timedelta(days=1)).strftime("%Y-%m-%d")  # Yesterday
+    day: str = (datetime.date.today() - datetime.timedelta(days=1)).strftime(
+        "%Y-%m-%d"
+    )  # Yesterday
     items: list = get_new_figshare_items(day)
     if not items:
         return
     formatted_items: list = gen_twitter_formatting(items)
 
-    start_msg: str = ("Here is the latest #opendata item published in @scilifelab "
-                      "Data Repository - a service on  http://data.scilifelab.se")
+    start_msg: str = (
+        "Here is the latest #opendata item published in @scilifelab "
+        "Data Repository - a service on  http://data.scilifelab.se"
+    )
     payload: dict = gen_feed_payload(start_msg, formatted_items, channel, day)
     post_to_slack(payload)
 
