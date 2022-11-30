@@ -106,7 +106,6 @@ def post_from_figshare(channel):
         path (str): Base path (except filename) for the helper file that will be created.
     """
     day: str = (datetime.date.today() - datetime.timedelta(days=1)).strftime("%Y-%m-%d")  # Yesterday
-    day = "2022-11-21"
     items: list = get_new_figshare_items(day)
     if not items:
         return
