@@ -107,9 +107,6 @@ def post_from_sll_feed(feed_name, channel, path="", name=""):
     if entries:
         start_msg = f"New {name}{'s' if len(entries) > 1 else ''} posted on the <https://www.scilifelab.se/{feed_name}s/|{feed_name}s page>!"
         msg = gen_feed_payload(start_msg, entries, channel)
-        import pprint
-
-        pprint.pprint(entries)
         post_to_slack(msg)
 
     if new_ids:
