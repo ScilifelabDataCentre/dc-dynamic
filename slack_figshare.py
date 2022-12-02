@@ -75,7 +75,7 @@ def gen_feed_payload(start_msg: str, entries: list, channel: str, day: str) -> d
 def gen_twitter_formatting(data_entries: list) -> list:
     twitter_entries = []
     for entry in data_entries:
-        twitter_entries.append(f"{entry['title']}\nhttps://{entry['doi']}")
+        twitter_entries.append(f"{entry['title']}\nhttps://doi.org/{entry['doi']}")
     return twitter_entries
 
 
