@@ -117,7 +117,7 @@ def post_from_figshare(channel):
 
     start_msg: str = (
         "Here is the latest #opendata item published in @scilifelab "
-        "Data Repository - a service on  http://data.scilifelab.se"
+        "Data Repository - a service on http://data.scilifelab.se"
     )
     payload: dict = gen_feed_payload(start_msg, formatted_items, channel, day)
     post_to_slack(payload)
