@@ -110,7 +110,7 @@ def post_from_figshare(channel):
     day: str = (datetime.date.today() - datetime.timedelta(days=1)).strftime(
         "%Y-%m-%d"
     )  # Yesterday
-    items: list = get_new_figshare_items(day)
+    items: list = [item for item in get_new_figshare_items(day) if item["doi"].endswith(".v1")]
     if not items:
         return
     formatted_items: list = gen_twitter_formatting(items)
