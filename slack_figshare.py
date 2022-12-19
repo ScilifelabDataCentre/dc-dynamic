@@ -110,14 +110,14 @@ def post_from_figshare(channel):
     day: str = (datetime.date.today() - datetime.timedelta(days=1)).strftime(
         "%Y-%m-%d"
     )  # Yesterday
-    items: list = get_new_figshare_items(day)
+    items: list = [item for item in get_new_figshare_items(day) if item["doi"].endswith(".v1")]
     if not items:
         return
     formatted_items: list = gen_twitter_formatting(items)
 
     start_msg: str = (
         "Here is the latest #opendata item published in @scilifelab "
-        "Data Repository - a service on  http://data.scilifelab.se"
+        "Data Repository - a service on http://data.scilifelab.se"
     )
     payload: dict = gen_feed_payload(start_msg, formatted_items, channel, day)
     post_to_slack(payload)

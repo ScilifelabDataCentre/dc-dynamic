@@ -114,7 +114,7 @@ def post_from_sll_feed(feed_name, channel, path="", name=""):
         if path and not path.endswith("/"):
             path += "/"
         with open(path + helper_filename, "w") as new_last_file:
-            new_last_file.write("\n".join(new_ids + past))
+            new_last_file.write("\n".join((new_ids + past)[:10]))
 
 
 if __name__ == "__main__":
