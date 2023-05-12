@@ -8,5 +8,5 @@ PYTHONPATH="$CODE_PATH"/covid-portal-visualisations/wastewater python "$CODE_PAT
 PYTHONPATH="$CODE_PATH"/covid-portal-visualisations/wastewater python "$CODE_PATH"/covid-portal-visualisations/wastewater/quant_malmo_kthplot.py > "$CODE_PATH"/output/wastewater_kthmalmo.json
 # Upload generated files
 for filename in $(ls $CODE_PATH/output) ; do
-    curl "https://blobserver.dckube.scilifelab.se/blob/$filename" -H "x-accesskey: $ACCESS_KEY" --upload-file "output/$filename"
+    curl "https://blobserver.dc.scilifelab.se/blob/$filename" -H "x-accesskey: $ACCESS_KEY" --upload-file "output/$filename"
 done
