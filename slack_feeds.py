@@ -86,7 +86,7 @@ def post_from_sll_feed(feed_name, channel, path="", name=""):
     feed_req = requests.get(SLL_FEED)
     if feed_req.status_code != 200:
         raise ValueError("Unable to retrieve feed")
-    helper_url = f"https://blobserver.dckube.scilifelab.se/blob/slack-helper-{feed_name}.dat"
+    helper_url = f"https://blobserver.dc.scilifelab.se/blob/slack-helper-{feed_name}.dat"
 
     past_req = requests.get(helper_url)
     if past_req.status_code != 200:

@@ -35,7 +35,7 @@ Make sure that the `requirements.txt` file in dc-dynamic contains all modules re
 Th easiest way to upload files is to use curl:
 
 ```bash
-curl "https://blobserver.dckube.scilifelab.se/blob/$filename" -H "x-accesskey: $ACCESS_KEY" --upload-file "$filename"
+curl "https://blobserver.dc.scilifelab.se/blob/$filename" -H "x-accesskey: $ACCESS_KEY" --upload-file "$filename"
 ```
 
 Feel free to set new variables, but remember to tell @talavis if you need them to be set for the cronjobs on the cluster.

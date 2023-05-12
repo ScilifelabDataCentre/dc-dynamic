@@ -5,7 +5,7 @@ import pandas
 import requests
 
 # data
-req = requests.get("https://blobserver.dckube.scilifelab.se/blob/CSSS_estimates.csv")
+req = requests.get("https://blobserver.dc.scilifelab.se/blob/CSSS_estimates.csv")
 reader = csv.reader(req.text.splitlines())
 data = list(reader)[-21:]
 df1 = pandas.DataFrame(
