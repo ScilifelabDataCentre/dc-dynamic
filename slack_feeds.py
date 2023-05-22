@@ -63,11 +63,15 @@ def post_to_slack(payload: dict):
         payload (dict): Data to send.
     """
     API_URL = "https://slack.com/api/chat.postMessage"
+    headers = {"Authorization": f"Bearer {os.environ.get('SLACK_TOKEN')}"}
     res = requests.post(
-        API_URL, headers={"Authorization": f"Bearer {os.environ.get('SLACK_TOKEN')}"}, json=payload
+        API_URL, headers=headers, json=payload
     )
     # if res.status_code != 200 or res.json()["
     if not res.json()["ok"]:
+        print(res.json())
+        print(headers)
+        print(payload)
         raise ValueError("Slack post failed")
 
 
