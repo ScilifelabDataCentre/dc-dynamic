@@ -9,6 +9,10 @@ PYTHONPATH="$CODE_PATH"/covid-portal-visualisations/wastewater python "$CODE_PAT
 PYTHONPATH="$CODE_PATH"/covid-portal-visualisations/wastewater python "$CODE_PATH"/covid-portal-visualisations/wastewater/gothenburg_covid.py > "$CODE_PATH"/output/wastewater_gothenburg.json
 # Enteric virus GU
 PYTHONPATH="$CODE_PATH"/covid-portal-visualisations/wastewater python "$CODE_PATH"/covid-portal-visualisations/wastewater/enteric_viruses_gu.py > "$CODE_PATH"/output/enteric_graph_gu.json
+# Influenza virus SLU
+PYTHONPATH="$CODE_PATH"/covid-portal-visualisations/wastewater python "$CODE_PATH"/covid-portal-visualisations/wastewater/combined_slu_influenza_a.py > "$CODE_PATH"/output/wastewater_slu_infA.json
+PYTHONPATH="$CODE_PATH"/covid-portal-visualisations/wastewater python "$CODE_PATH"/covid-portal-visualisations/wastewater/combined_slu_influenza_b.py > "$CODE_PATH"/output/wastewater_slu_infB.json
+
 
 # Upload generated files
 for filename in $(ls $CODE_PATH/output) ; do
