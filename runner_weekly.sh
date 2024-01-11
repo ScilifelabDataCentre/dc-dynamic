@@ -1,6 +1,6 @@
 export CODE_PATH=/code
 
-PYTHONPATH="$CODE_PATH"/covid-portal-visualisations/Wordcloud python "$CODE_PATH"/gen_clouds.py
+PYTHONPATH="$CODE_PATH"/pathogens-portal-visualisations/Wordcloud python "$CODE_PATH"/gen_clouds.py
 
 # Publication related updates
 python "$CODE_PATH"/gen_publication_count.py > "$CODE_PATH"/output/covid-portal-publication-counts.json

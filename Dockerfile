@@ -4,7 +4,7 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y git curl
 
 WORKDIR /code
 
-RUN git clone https://github.com/ScilifelabDataCentre/covid-portal-visualisations.git
+RUN git clone https://github.com/ScilifelabDataCentre/pathogens-portal-visualisations.git
 
 COPY *.sh *.py requirements.txt /code/
 
