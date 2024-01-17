@@ -1,10 +1,11 @@
 export CODE_PATH=/code
 
 # Covid quatification SLU
+
 PYTHONPATH="$CODE_PATH"/pathogens-portal-visualisations/wastewater python "$CODE_PATH"/pathogens-portal-visualisations/wastewater/combined_slu_regular.py > "$CODE_PATH"/output/wastewater_combined_slu_regular.json
 # Covid quatification KTH
-PYTHONPATH="$CODE_PATH"/pathogens-portal-visualisations/wastewater python "$CODE_PATH"/pathogens-portal-visualisations/wastewater/combined_stockholm_regular.py > "$CODE_PATH"/output/wastewater_combined_stockholm.json
-PYTHONPATH="$CODE_PATH"/pathogens-portal-visualisations/wastewater python "$CODE_PATH"/pathogens-portal-visualisations/wastewater/quant_malmo_kthplot.py > "$CODE_PATH"/output/wastewater_kthmalmo.json
+#PYTHONPATH="$CODE_PATH"/pathogens-portal-visualisations/wastewater python "$CODE_PATH"/pathogens-portal-visualisations/wastewater/combined_stockholm_regular.py > "$CODE_PATH"/output/wastewater_combined_stockholm.json
+#PYTHONPATH="$CODE_PATH"/pathogens-portal-visualisations/wastewater python "$CODE_PATH"/pathogens-portal-visualisations/wastewater/quant_malmo_kthplot.py > "$CODE_PATH"/output/wastewater_kthmalmo.json
 # Covid quatification GU
 PYTHONPATH="$CODE_PATH"/pathogens-portal-visualisations/wastewater python "$CODE_PATH"/pathogens-portal-visualisations/wastewater/gothenburg_covid.py > "$CODE_PATH"/output/wastewater_gothenburg.json
 # Enteric virus GU
