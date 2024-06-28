@@ -14,6 +14,10 @@ PYTHONPATH="$CODE_PATH"/pathogens-portal-visualisations/wastewater python "$CODE
 PYTHONPATH="$CODE_PATH"/pathogens-portal-visualisations/wastewater python "$CODE_PATH"/pathogens-portal-visualisations/wastewater/combined_slu_influenza_a.py > "$CODE_PATH"/output/wastewater_slu_infA.json
 PYTHONPATH="$CODE_PATH"/pathogens-portal-visualisations/wastewater python "$CODE_PATH"/pathogens-portal-visualisations/wastewater/combined_slu_influenza_b.py > "$CODE_PATH"/output/wastewater_slu_infB.json
 
+# Serology
+PYTHONPATH="$CODE_PATH"/pathogens-portal-visualisations/serology python "$CODE_PATH"/pathogens-portal-visualisations/serology/weekly-serology-tests.py > "$CODE_PATH"/output/weekly_serology_tests.json
+PYTHONPATH="$CODE_PATH"/pathogens-portal-visualisations/serology python "$CODE_PATH"/pathogens-portal-visualisations/serology/cumulative-serology-tests.py > "$CODE_PATH"/output/cumulative_serology_tests.json
+
 
 # Upload generated files
 for filename in $(ls $CODE_PATH/output) ; do
