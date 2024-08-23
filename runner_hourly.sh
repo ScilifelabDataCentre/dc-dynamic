@@ -1,6 +1,8 @@
 export CODE_PATH=/code
 
+# Post items from SciLifeLab feed to Slack channel
 python "$CODE_PATH"/slack_feeds.py $CODE_PATH/output
+
 
 # Upload generated files
 for filename in $(ls $CODE_PATH/output) ; do
