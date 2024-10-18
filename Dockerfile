@@ -7,9 +7,14 @@ WORKDIR /code
 RUN git clone https://github.com/ScilifelabDataCentre/pathogens-portal-visualisations.git && \
     git clone https://github.com/ScilifelabDataCentre/pathogens-portal-scripts.git
 
-COPY *.sh *.py requirements.txt /code/
-
+# Install Python dependencies from the current directory and both repositories
+COPY requirements.txt /code/
 RUN pip install -r requirements.txt && \
-    mkdir output
+    pip install -r pathogens-portal-visualisations/requirements.txt && \
+    pip install -r pathogens-portal-scripts/requirements.txt
 
-CMD ["/code/all.sh"]
+# Copy other necessary files to the /code directory
+COPY *.sh *.py /code/
+
+# Create an output directory if needed
+RUN mkdir /code/output
