@@ -17,7 +17,7 @@ PYTHONPATH="$CODE_PATH"/pathogens-portal-visualisations/serology python "$CODE_P
 # ClinMicro statistics is based on these files under /pathogens-portal-visualisations/ClinMicro:
 PYTHONPATH="$CODE_PATH"/pathogens-portal-visualisations/ClinMicro python "$CODE_PATH"/pathogens-portal-visualisations/ClinMicro/lineage-plotting-one.py > "$CODE_PATH"/output/lineage_one_wholetime.json
 PYTHONPATH="$CODE_PATH"/pathogens-portal-visualisations/ClinMicro python "$CODE_PATH"/pathogens-portal-visualisations/ClinMicro/lineage-plotting-four.py > "$CODE_PATH"/output/lineage_four_recent.json
-PYTHONPATH="$CODE_PATH"/pathogens-portal-visualisations/ClinMicro python "$CODE_PATH"/pathogens-portal-visualisations/ClinMicro/lineage-plotting-five.py > "$CODE_PATH"/output/lineage_five_recent.json
+PYTHONPATH="$CODE_PATH"/pathogens-portal-visualisations/ClinMicro python "$CODE_PATH"/pathogens-portal-visualisations/ClinMicro/lineage-plotting-six.py > "$CODE_PATH"/output/lineage_six_recent.json
 
 # Upload generated files
 for filename in $(ls $CODE_PATH/output) ; do
