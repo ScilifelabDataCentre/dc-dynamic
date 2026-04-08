@@ -4,7 +4,6 @@ export CODE_PATH=/code
 PYTHONPATH="$CODE_PATH"/pathogens-portal-visualisations/Wordcloud python "$CODE_PATH"/pathogens-portal-visualisations/Wordcloud/livewordcloud.py
 
 # Publication related updates
-PYTHONPATH="$CODE_PATH"/pathogens-portal-visualisations/Count_publications python "$CODE_PATH"/pathogens-portal-visualisations/Count_publications/count_publications.py > "$CODE_PATH"/output/COVID_publication_count.json
 PYTHONPATH="$CODE_PATH"/pathogens-portal-visualisations/Count_publications python "$CODE_PATH"/pathogens-portal-visualisations/Count_publications/gen_recent_pub.py > "$CODE_PATH"/output/covid-portal-recent10.json
 
 
