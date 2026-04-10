@@ -37,15 +37,6 @@ Runs the script `slack_figshare.py` on `0 6 * * *` (06:00 GMT)
 
 **slack_figshare.py** - Script to post message about new items in figshare to configured slack channel
 
-### cron run weekly
-
-#### freya_runner_weekly.sh
-
-Runs the script created by team Freya on `0 4 * * 5 ` (04:00 GMT every Friday morning).
-
-Any files put in `$CODE_PATH/output` will be uploaded to Blobserver using the dc-dynamic account.
-
-
 ## Adding jobs
 
 Add new commands to the above files to have them running on schedule. If you need jobs to run on a different schedule, talk to Sys admins or team Freya.
